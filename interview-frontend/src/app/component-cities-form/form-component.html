@@ -1,0 +1,10 @@
+<!doctype html>
+<div>
+    <form (ngSubmit)="onSubmit()">
+      <input type="text" name="query" [(ngModel)]="searchQuery" placeholder="Enter city name" />
+      <button type="submit">Search</button>
+    </form>
+    <ul *ngIf="searchResults">
+      <li *ngFor="let city of searchResults">{{ city.cityName }}</li>
+    </ul>
+  </div>
