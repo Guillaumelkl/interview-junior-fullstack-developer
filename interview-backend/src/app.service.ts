@@ -1,18 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import citiesData from './cities.json';
+import * as citiesData from './cities.json';
 
 @Injectable()
-export class AppService {
-  getCitiesByQuery(query: string, page: number, perPage: number) {
-    query = query.trim().toLowerCase();
-    const matchCities = citiesData.filter((city) =>
-      city.cityName.toLowerCase().includes(query),
+export class CityService {
+  findCities(query = '', page: number, pageSize: number): any {
+    const normalizedQuery = query.toLowerCase().trim();
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    const filteredCities = citiesData.filter((city) =>
+      city.cityName.toLowerCase().includes(normalizedQuery),
     );
 
-    const startIdx = (page - 1) * perPage;
-    const endIdx = startIdx + perPage;
-    const citiesForPage = matchCities.slice(startIdx, endIdx);
+    const citiesOnPage = filteredCities.slice(startIndex, endIndex);
+    const totalCitiesMatchingQuery = filteredCities.length;
 
-    return citiesForPage;
+    return {
+      cities: citiesOnPage,
+      totalCount: totalCitiesMatchingQuery,
+    };
   }
 }
