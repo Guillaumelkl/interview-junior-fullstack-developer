@@ -1,7 +1,19 @@
-<p>cities works!</p>
+<div class="container">
+    <div>
+        <h2 class="title">Welcome to the City Search </h2>
+    </div>
+    <br/>
+    <div>
+    <form class="city-container">
+            <input class="input-search" type="text" #query (change)="search(query.value)">
+        <br/>
+            <button type="button" (click)="search(query.value)" class="search">search</button>
+        
+    </form>
+    <div *ngFor="let city of cities">
+        <li class="cities">{{city.cityName }}</li>
+    </div>
+    </div>
 
-<input type="text" #query (change)="search(query.value)">
-<button type="button" (click)="search(query.value)" class="search">search</button>
-<div *ngFor="let city of cities">
-    <li>{{city.cityName }}</li>
 </div>
+
